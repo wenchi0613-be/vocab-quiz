@@ -1,0 +1,343 @@
+<meta charset="utf-8">
+<title>學測詞彙小考</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --bg: #F6F7F6;
+    --surface: #FFFFFF;
+    --ink: #1C2430;
+    --muted: #5C6675;
+    --line: #E2E5E2;
+    --accent: #2B4A8B;
+    --accent-soft: #EDF1F8;
+    --good: #177245;
+    --good-soft: #EAF4EE;
+    --bad: #B3372F;
+    --bad-soft: #F9EDEC;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12161C;
+      --surface: #1B222B;
+      --ink: #E8EAED;
+      --muted: #99A3AF;
+      --line: #2A333E;
+      --accent: #8AABE8;
+      --accent-soft: #223048;
+      --good: #63C08D;
+      --good-soft: #1D3328;
+      --bad: #E8837B;
+      --bad-soft: #40241F;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12161C;
+    --surface: #1B222B;
+    --ink: #E8EAED;
+    --muted: #99A3AF;
+    --line: #2A333E;
+    --accent: #8AABE8;
+    --accent-soft: #223048;
+    --good: #63C08D;
+    --good-soft: #1D3328;
+    --bad: #E8837B;
+    --bad-soft: #40241F;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, "SF Pro TC", "PingFang TC", "Noto Sans TC", system-ui, sans-serif;
+    line-height: 1.55;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .wrap { max-width: 620px; margin: 0 auto; padding: 20px 16px 120px; }
+  header { padding: 8px 0 4px; }
+  .eyebrow {
+    font-size: 12px; letter-spacing: .14em; color: var(--muted);
+    text-transform: uppercase;
+  }
+  h1 { font-size: 26px; margin: 2px 0 2px; letter-spacing: .01em; text-wrap: balance; }
+  .sub { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+
+  .namebar { margin: 4px 0 20px; }
+  .namelabel { display: block; font-size: 13.5px; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
+  .nameinput {
+    width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid var(--line);
+    background: var(--surface); color: var(--ink); font-size: 17px; font-weight: 600;
+    font-family: inherit; transition: border-color .15s;
+  }
+  .nameinput:focus { border-color: var(--accent); outline: none; }
+  .nameinput:focus-visible, .opt:focus-visible, .btn:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+
+  .q { background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+       padding: 16px 16px 12px; margin-bottom: 14px; }
+  .qno { font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: .08em; }
+  .stem { margin: 4px 0 12px; font-size: 16.5px; }
+  .blank {
+    display: inline-block; min-width: 64px; border-bottom: 2px solid var(--accent);
+    text-align: center; font-weight: 700; color: var(--accent); line-height: 1.1;
+  }
+  .opts { display: flex; flex-direction: column; gap: 8px; }
+  .opt {
+    display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
+    padding: 10px 12px; border-radius: 9px; border: 1.5px solid var(--line);
+    background: var(--surface); color: var(--ink); font-size: 16px; cursor: pointer;
+    transition: border-color .12s, background .12s;
+  }
+  .opt .L {
+    flex: 0 0 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--line);
+    display: grid; place-items: center; font-size: 12.5px; font-weight: 700; color: var(--muted);
+  }
+  .opt.on { border-color: var(--accent); background: var(--accent-soft); }
+  .opt.on .L { border-color: var(--accent); background: var(--accent); color: var(--surface); }
+
+  .footer {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    background: var(--surface); border-top: 1px solid var(--line);
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  }
+  .footrow { max-width: 620px; margin: 0 auto; display: flex; align-items: center; gap: 14px; }
+  .progress { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .btn {
+    border: none; border-radius: 10px; padding: 12px 18px; font-size: 16px; font-weight: 700;
+    background: var(--accent); color: #fff; cursor: pointer; flex: 1;
+  }
+  :root[data-theme="dark"] .btn, .btn { color: #fff; }
+  .btn:disabled { opacity: .4; cursor: default; }
+  .btn.ghost { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); flex: 0 0 auto; }
+
+  /* results */
+  .score { text-align: center; padding: 26px 0 8px; }
+  .score .big { font-size: 56px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1; }
+  .score .of { font-size: 18px; color: var(--muted); font-weight: 600; }
+  .verdict { text-align: center; color: var(--muted); margin: 6px 0 20px; }
+  .wrongcard { border-left: 4px solid var(--bad); }
+  .rightnote { background: var(--good-soft); border: 1px solid var(--line); border-radius: 12px;
+               padding: 14px 16px; color: var(--good); font-weight: 600; margin-bottom: 14px; }
+  .fix { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; margin-top: 8px; }
+  .fix .word { font-weight: 800; font-size: 17px; }
+  .fix .zh { color: var(--muted); }
+  .fix .picked { color: var(--bad); font-size: 14px; }
+  .resultline {
+    background: var(--surface); border: 1px dashed var(--line); border-radius: 10px;
+    padding: 12px 14px; font-size: 14.5px; margin: 18px 0 10px; user-select: all;
+    overflow-wrap: anywhere;
+  }
+  .hint { font-size: 13.5px; color: var(--muted); margin: 0 0 14px; }
+  .toast {
+    position: fixed; left: 50%; transform: translateX(-50%); bottom: 96px;
+    background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 99px;
+    font-size: 14.5px; opacity: 0; pointer-events: none; transition: opacity .25s;
+  }
+  .toast.show { opacity: 1; }
+  .hidden { display: none; }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GSAT Vocabulary</div>
+    <h1>學測詞彙小考</h1>
+    <p class="sub" id="testLabel"></p>
+  </header>
+
+  <section id="quizView">
+    <div class="namebar">
+      <label class="namelabel" for="nameinput">你的名字 Your name</label>
+      <input class="nameinput" id="nameinput" type="text" autocomplete="off"
+             maxlength="30" placeholder="例如 Woody">
+    </div>
+    <div id="questions"></div>
+  </section>
+
+  <section id="resultView" class="hidden">
+    <div class="score"><span class="big" id="scoreNum"></span><span class="of" id="scoreOf"></span></div>
+    <p class="verdict" id="verdict"></p>
+    <div id="wrongList"></div>
+    <div class="resultline" id="resultLine"></div>
+    <p class="hint">把上面這行傳給老師（複製後貼到 LINE）。</p>
+    <div class="footrow" style="position:static;padding:0;">
+      <button class="btn" id="copyBtn">複製結果</button>
+      <button class="btn ghost" id="retakeBtn">重新作答</button>
+    </div>
+  </section>
+</div>
+
+<div class="footer" id="footer">
+  <div class="footrow">
+    <span class="progress" id="progress"></span>
+    <button class="btn" id="submitBtn" disabled>交卷</button>
+  </div>
+</div>
+<div class="toast" id="toast">已複製，貼到 LINE 給老師吧</div>
+
+<script>
+const TEST = {
+  id: "詞彙題 T1",
+  label: "詞彙題 Test 1 · 15 題 · 選出最適合題意的單字",
+  questions: [
+    {stem:"Many people lined up to ______ blood after the earthquake to help the injured.",
+     opts:["absorb","predict","donate","defend"], ans:2, word:"donate", zh:"捐贈"},
+    {stem:"Because of the long dry season, the island is facing a serious water ______.",
+     opts:["shortage","ceremony","harvest","luggage"], ans:0, word:"shortage", zh:"短缺"},
+    {stem:"At first the medicine seemed useless, but her condition ______ improved over the following weeks.",
+     opts:["urgently","politely","tightly","gradually"], ans:3, word:"gradually", zh:"逐漸地"},
+    {stem:"After living in Paris for ten years, Mark speaks ______ French and often works as a translator.",
+     opts:["doubtful","fluent","violent","absent"], ans:1, word:"fluent", zh:"流利的"},
+    {stem:"Because of the typhoon, the school decided to ______ the concert until next Friday.",
+     opts:["postpone","measure","greet","admire"], ans:0, word:"postpone", zh:"延期"},
+    {stem:"With soft music and warm lights, the café has a pleasant ______ that attracts many young people.",
+     opts:["authority","instrument","satellite","atmosphere"], ans:3, word:"atmosphere", zh:"氣氛"},
+    {stem:"The typhoon caused ______ damage to the mountain villages, and many roads were closed.",
+     opts:["gentle","humble","severe","portable"], ans:2, word:"severe", zh:"嚴重的"},
+    {stem:"All students are welcome to ______ in the singing contest; the winner will get a big prize.",
+     opts:["participate","negotiate","circulate","hesitate"], ans:0, word:"participate", zh:"參加"},
+    {stem:"The night market has built a ______ for cheap and delicious food, so it is always crowded.",
+     opts:["definition","reputation","tradition","direction"], ans:1, word:"reputation", zh:"名聲"},
+    {stem:"He failed his driving test three times, but he ______ passed it on the fourth try.",
+     opts:["accidentally","temporarily","previously","eventually"], ans:3, word:"eventually", zh:"最終"},
+    {stem:"The captain ordered everyone to ______ the sinking ship and get into the small boats.",
+     opts:["organize","abandon","translate","decorate"], ans:1, word:"abandon", zh:"放棄；棄（船）"},
+    {stem:"The new washing machine is so ______ that it saves both water and electricity.",
+     opts:["innocent","frequent","efficient","ancient"], ans:2, word:"efficient", zh:"有效率的"},
+    {stem:"Lack of money remains the biggest ______ to the city's plan to build a new library.",
+     opts:["obstacle","element","incident","monument"], ans:0, word:"obstacle", zh:"障礙"},
+    {stem:"After hours of discussion, the board finally decided to ______ the younger designer's proposal.",
+     opts:["attach","admire","annoy","adopt"], ans:3, word:"adopt", zh:"採用"},
+    {stem:"She has made ______ progress in English; a year ago she could hardly say a full sentence.",
+     opts:["responsible","remarkable","available","comfortable"], ans:1, word:"remarkable", zh:"顯著的"}
+  ]
+};
+
+const LETTERS = ["A","B","C","D"];
+const KEY = "gsat-vocab-" + TEST.id;
+let state = {name: null, answers: Array(TEST.questions.length).fill(null)};
+try {
+  const saved = JSON.parse(localStorage.getItem(KEY));
+  if (saved && Array.isArray(saved.answers) &&
+      saved.answers.length === TEST.questions.length) state = saved;
+} catch (e) {}
+
+document.getElementById("testLabel").textContent = TEST.label;
+
+const nameInput = document.getElementById("nameinput");
+nameInput.value = state.name || "";
+nameInput.addEventListener("input", () => {
+  state.name = nameInput.value.trim() || null;
+  save(); paintFooter();
+});
+
+const qwrap = document.getElementById("questions");
+TEST.questions.forEach((q, i) => {
+  const card = document.createElement("div");
+  card.className = "q";
+  const stem = q.stem.replace("______", '<span class="blank">&nbsp;</span>');
+  card.innerHTML = '<div class="qno">' + (i + 1) + ' / ' + TEST.questions.length +
+                   '</div><div class="stem">' + stem + '</div>';
+  const opts = document.createElement("div");
+  opts.className = "opts";
+  q.opts.forEach((o, j) => {
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.innerHTML = '<span class="L">' + LETTERS[j] + '</span><span>' + o + '</span>';
+    b.onclick = () => {
+      state.answers[i] = j; save();
+      [...opts.children].forEach((c, k) => c.classList.toggle("on", k === j));
+      const blank = card.querySelector(".blank");
+      blank.textContent = o;
+      paintFooter();
+    };
+    if (state.answers[i] === j) {
+      b.classList.add("on");
+      card.querySelector(".blank").textContent = o;
+    }
+    opts.appendChild(b);
+  });
+  card.appendChild(opts);
+  qwrap.appendChild(card);
+});
+
+function answered() { return state.answers.filter(a => a !== null).length; }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+const submitBtn = document.getElementById("submitBtn");
+const progress = document.getElementById("progress");
+function paintFooter() {
+  const n = answered(), total = TEST.questions.length;
+  progress.textContent = (state.name ? state.name + "｜" : "先填名字｜") +
+                         "已答 " + n + " / " + total;
+  submitBtn.disabled = !(state.name && n === total);
+}
+
+submitBtn.onclick = () => {
+  const wrong = [];
+  TEST.questions.forEach((q, i) => {
+    if (state.answers[i] !== q.ans) wrong.push(i);
+  });
+  const total = TEST.questions.length;
+  document.getElementById("scoreNum").textContent = total - wrong.length;
+  document.getElementById("scoreOf").textContent = " / " + total;
+  document.getElementById("verdict").textContent =
+    wrong.length === 0 ? "全對！這 15 個單字都站穩了。" :
+    "要複習的單字在下面 — 這 " + wrong.length + " 個才是今天真正的收穫。";
+
+  const wl = document.getElementById("wrongList");
+  wl.innerHTML = "";
+  if (wrong.length === 0) {
+    wl.innerHTML = '<div class="rightnote">15 / 15 — 把結果傳給老師吧！</div>';
+  }
+  wrong.forEach(i => {
+    const q = TEST.questions[i];
+    const picked = state.answers[i];
+    const card = document.createElement("div");
+    card.className = "q wrongcard";
+    card.innerHTML =
+      '<div class="qno">第 ' + (i + 1) + ' 題</div>' +
+      '<div class="stem">' + q.stem.replace("______",
+        '<span class="blank">' + q.word + '</span>') + '</div>' +
+      '<div class="fix"><span class="word">' + LETTERS[q.ans] + '. ' + q.word +
+      '</span><span class="zh">' + q.zh + '</span>' +
+      '<span class="picked">你選了 ' + LETTERS[picked] + '. ' + q.opts[picked] +
+      '</span></div>';
+    wl.appendChild(card);
+  });
+
+  const line = TEST.id + "｜" + state.name + "｜" + (total - wrong.length) + "/" + total +
+    "｜錯: " + (wrong.length === 0 ? "無" :
+      wrong.map(i => (i + 1) + " " + TEST.questions[i].word).join(", "));
+  document.getElementById("resultLine").textContent = line;
+
+  document.getElementById("quizView").classList.add("hidden");
+  document.getElementById("footer").classList.add("hidden");
+  document.getElementById("resultView").classList.remove("hidden");
+  window.scrollTo({top: 0});
+};
+
+document.getElementById("copyBtn").onclick = async () => {
+  const text = document.getElementById("resultLine").textContent;
+  let ok = false;
+  try { await navigator.clipboard.writeText(text); ok = true; } catch (e) {
+    const ta = document.createElement("textarea");
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try { ok = document.execCommand("copy"); } catch (e2) {}
+    ta.remove();
+  }
+  const toast = document.getElementById("toast");
+  toast.textContent = ok ? "已複製，貼到 LINE 給老師吧" : "複製失敗 — 長按上面那行手動複製";
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 2600);
+};
+
+document.getElementById("retakeBtn").onclick = () => {
+  state.answers = Array(TEST.questions.length).fill(null); save();
+  location.reload();
+};
+
+paintNames(); paintFooter();
+</script>
