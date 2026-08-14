@@ -1,0 +1,379 @@
+<meta charset="utf-8">
+<title>學測詞彙複習</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --bg: #F6F7F6;
+    --surface: #FFFFFF;
+    --ink: #1C2430;
+    --muted: #5C6675;
+    --line: #E2E5E2;
+    --accent: #2B4A8B;
+    --accent-soft: #EDF1F8;
+    --good: #177245;
+    --good-soft: #EAF4EE;
+    --bad: #B3372F;
+    --bad-soft: #F9EDEC;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12161C;
+      --surface: #1B222B;
+      --ink: #E8EAED;
+      --muted: #99A3AF;
+      --line: #2A333E;
+      --accent: #8AABE8;
+      --accent-soft: #223048;
+      --good: #63C08D;
+      --good-soft: #1D3328;
+      --bad: #E8837B;
+      --bad-soft: #40241F;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12161C;
+    --surface: #1B222B;
+    --ink: #E8EAED;
+    --muted: #99A3AF;
+    --line: #2A333E;
+    --accent: #8AABE8;
+    --accent-soft: #223048;
+    --good: #63C08D;
+    --good-soft: #1D3328;
+    --bad: #E8837B;
+    --bad-soft: #40241F;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, "SF Pro TC", "PingFang TC", "Noto Sans TC", system-ui, sans-serif;
+    line-height: 1.55;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .wrap { max-width: 620px; margin: 0 auto; padding: 20px 16px 120px; }
+  header { padding: 8px 0 4px; }
+  .eyebrow { font-size: 12px; letter-spacing: .14em; color: var(--muted); text-transform: uppercase; }
+  h1 { font-size: 26px; margin: 2px 0 2px; letter-spacing: .01em; text-wrap: balance; }
+  .sub { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+  .namebar { margin: 4px 0 20px; }
+  .namelabel { display: block; font-size: 13.5px; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
+  .nameinput {
+    width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid var(--line);
+    background: var(--surface); color: var(--ink); font-size: 17px; font-weight: 600;
+    font-family: inherit; transition: border-color .15s;
+  }
+  .nameinput:focus { border-color: var(--accent); outline: none; }
+  .parttitle { font-size: 16px; font-weight: 800; margin: 22px 0 4px; }
+  .partnote { font-size: 13.5px; color: var(--muted); margin: 0 0 12px; }
+  .q { background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+       padding: 14px 16px; margin-bottom: 10px; }
+  .matchrow { display: flex; align-items: center; gap: 12px; }
+  .matchrow .word { flex: 1; font-size: 17px; font-weight: 700; }
+  .matchrow select {
+    flex: 0 0 46%; padding: 10px 8px; border-radius: 9px; border: 1.5px solid var(--line);
+    background: var(--surface); color: var(--ink); font-size: 15px; font-family: inherit;
+  }
+  .matchrow select:focus { border-color: var(--accent); outline: none; }
+  .bank { background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+          padding: 10px 14px; font-size: 14.5px; margin-bottom: 12px; }
+  .bank b { color: var(--accent); }
+  .stem { margin: 0 0 10px; font-size: 16.5px; }
+  .qno { font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: .08em; margin-bottom: 4px; }
+  .fillinput {
+    width: 100%; padding: 10px 12px; border-radius: 9px; border: 1.5px solid var(--line);
+    background: var(--surface); color: var(--ink); font-size: 16px; font-family: inherit;
+  }
+  .fillinput:focus { border-color: var(--accent); outline: none; }
+  .footer {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    background: var(--surface); border-top: 1px solid var(--line);
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  }
+  .footrow { max-width: 620px; margin: 0 auto; display: flex; align-items: center; gap: 14px; }
+  .progress { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .btn {
+    border: none; border-radius: 10px; padding: 12px 18px; font-size: 16px; font-weight: 700;
+    background: var(--accent); color: #fff; cursor: pointer; flex: 1;
+  }
+  .btn:disabled { opacity: .4; cursor: default; }
+  .btn.ghost { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); flex: 0 0 auto; }
+  .nameinput:focus-visible, .fillinput:focus-visible, select:focus-visible, .btn:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .score { text-align: center; padding: 26px 0 8px; }
+  .score .big { font-size: 56px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1; }
+  .score .of { font-size: 18px; color: var(--muted); font-weight: 600; }
+  .verdict { text-align: center; color: var(--muted); margin: 6px 0 20px; }
+  .wrongcard { border-left: 4px solid var(--bad); }
+  .rightnote { background: var(--good-soft); border: 1px solid var(--line); border-radius: 12px;
+               padding: 14px 16px; color: var(--good); font-weight: 600; margin-bottom: 14px; }
+  .fix { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; margin-top: 6px; }
+  .fix .word { font-weight: 800; font-size: 17px; }
+  .fix .zh { color: var(--muted); }
+  .fix .picked { color: var(--bad); font-size: 14px; }
+  .resultline {
+    background: var(--surface); border: 1px dashed var(--line); border-radius: 10px;
+    padding: 12px 14px; font-size: 14.5px; margin: 18px 0 10px; user-select: all;
+    overflow-wrap: anywhere;
+  }
+  .hint { font-size: 13.5px; color: var(--muted); margin: 0 0 14px; }
+  .toast {
+    position: fixed; left: 50%; transform: translateX(-50%); bottom: 96px;
+    background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 99px;
+    font-size: 14.5px; opacity: 0; pointer-events: none; transition: opacity .25s;
+  }
+  .toast.show { opacity: 1; }
+  .hidden { display: none; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">GSAT Vocabulary</div>
+    <h1>學測詞彙複習</h1>
+    <p class="sub" id="testLabel"></p>
+  </header>
+
+  <section id="quizView">
+    <div class="namebar">
+      <label class="namelabel" for="nameinput">你的名字 Your name</label>
+      <input class="nameinput" id="nameinput" type="text" autocomplete="off"
+             maxlength="30" placeholder="例如 Woody">
+    </div>
+
+    <div class="parttitle">Part A · 配對 Meaning Match</div>
+    <p class="partnote">幫每個單字選出正確的中文意思。</p>
+    <div id="matching"></div>
+
+    <div class="parttitle">Part B · 填空 Fill in the Blanks</div>
+    <p class="partnote">從單字庫挑一個字填進句子，<b>必要時改變字形</b>（例如加 -ed）。不是每個字都會用到。拼字要正確！</p>
+    <div class="bank" id="bank"></div>
+    <div id="cloze"></div>
+  </section>
+
+  <section id="resultView" class="hidden">
+    <div class="score"><span class="big" id="scoreNum"></span><span class="of" id="scoreOf"></span></div>
+    <p class="verdict" id="verdict"></p>
+    <div id="wrongList"></div>
+    <div class="resultline" id="resultLine"></div>
+    <p class="hint">把上面這行傳給老師（複製後貼到 LINE）。</p>
+    <div class="footrow" style="position:static;padding:0;">
+      <button class="btn" id="copyBtn">複製結果</button>
+      <button class="btn ghost" id="retakeBtn">重新作答</button>
+    </div>
+  </section>
+</div>
+
+<div class="footer" id="footer">
+  <div class="footrow">
+    <span class="progress" id="progress"></span>
+    <button class="btn" id="submitBtn" disabled>交卷</button>
+  </div>
+</div>
+<div class="toast" id="toast">已複製，貼到 LINE 給老師吧</div>
+
+<script>
+const REVIEW = {
+  id: "複習 R1",
+  label: "複習 Review 1 · Test 1 的 15 個單字 · 配對 15 題＋填空 10 題",
+  // meanings in the SAME lettered order as the paper answer key (A–O)
+  meanings: ["流利的","障礙","顯著的","參加","有效率的","延期","採用","最終",
+             "名聲","短缺","捐贈","放棄；棄（船）","嚴重的","逐漸地","氣氛"],
+  words: [
+    {word:"donate", ans:10}, {word:"shortage", ans:9}, {word:"gradually", ans:13},
+    {word:"fluent", ans:0}, {word:"postpone", ans:5}, {word:"atmosphere", ans:14},
+    {word:"severe", ans:12}, {word:"participate", ans:3}, {word:"reputation", ans:8},
+    {word:"eventually", ans:7}, {word:"abandon", ans:11}, {word:"efficient", ans:4},
+    {word:"obstacle", ans:1}, {word:"adopt", ans:6}, {word:"remarkable", ans:2}
+  ],
+  cloze: [
+    {stem:"The factory had to ______ its plan for a new building when the money ran out.",
+     accept:["abandon"], show:"abandon"},
+    {stem:"Not knowing the language was the main ______ he faced when he moved abroad.",
+     accept:["obstacle"], show:"obstacle"},
+    {stem:"The meeting has been ______ to next Monday because the manager is sick.",
+     accept:["postponed"], show:"postponed"},
+    {stem:"Thousands of runners will ______ in this year's city marathon.",
+     accept:["participate"], show:"participate"},
+    {stem:"She answered every question in ______ English during the job interview.",
+     accept:["fluent"], show:"fluent"},
+    {stem:"The little bookstore is loved for its quiet, friendly ______.",
+     accept:["atmosphere"], show:"atmosphere"},
+    {stem:"If you practice a little every day, your speaking will ______ get better.",
+     accept:["gradually"], show:"gradually"},
+    {stem:"Rich countries often ______ food and medicine to areas hit by war.",
+     accept:["donate"], show:"donate"},
+    {stem:"Restaurants that serve bad food quickly lose their ______.",
+     accept:["reputation","reputations"], show:"reputation(s)"},
+    {stem:"The country is facing a ______ of nurses, so hospitals are hiring from abroad.",
+     accept:["shortage"], show:"shortage"}
+  ]
+};
+
+const LETTERS = "ABCDEFGHIJKLMNO";
+const KEY = "gsat-review-" + REVIEW.id;
+const nA = REVIEW.words.length, nB = REVIEW.cloze.length, TOTAL = nA + nB;
+let state = {name: null, match: Array(nA).fill(null), fill: Array(nB).fill("")};
+try {
+  const saved = JSON.parse(localStorage.getItem(KEY));
+  if (saved && Array.isArray(saved.match) && saved.match.length === nA &&
+      Array.isArray(saved.fill) && saved.fill.length === nB) state = saved;
+} catch (e) {}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+document.getElementById("testLabel").textContent = REVIEW.label;
+
+const nameInput = document.getElementById("nameinput");
+nameInput.value = state.name || "";
+nameInput.addEventListener("input", () => {
+  state.name = nameInput.value.trim() || null;
+  save(); paintFooter();
+});
+
+// Part A — one select per word, meanings in fixed A–O order
+const mwrap = document.getElementById("matching");
+REVIEW.words.forEach((w, i) => {
+  const row = document.createElement("div");
+  row.className = "q matchrow";
+  const label = document.createElement("div");
+  label.className = "word";
+  label.textContent = (i + 1) + ". " + w.word;
+  const sel = document.createElement("select");
+  const ph = document.createElement("option");
+  ph.value = ""; ph.textContent = "選意思…"; ph.disabled = true; ph.selected = true;
+  sel.appendChild(ph);
+  REVIEW.meanings.forEach((m, j) => {
+    const o = document.createElement("option");
+    o.value = j; o.textContent = LETTERS[j] + ". " + m;
+    sel.appendChild(o);
+  });
+  if (state.match[i] !== null) sel.value = String(state.match[i]);
+  sel.addEventListener("change", () => {
+    state.match[i] = sel.value === "" ? null : Number(sel.value);
+    save(); paintFooter();
+  });
+  row.appendChild(label); row.appendChild(sel);
+  mwrap.appendChild(row);
+});
+
+// Part B — word bank + typed blanks
+document.getElementById("bank").innerHTML = "<b>單字庫：</b>" +
+  REVIEW.words.map(w => w.word).sort().join("　·　");
+const cwrap = document.getElementById("cloze");
+REVIEW.cloze.forEach((c, i) => {
+  const card = document.createElement("div");
+  card.className = "q";
+  card.innerHTML = '<div class="qno">' + (i + 1) + ' / ' + nB + '</div>' +
+                   '<div class="stem">' + c.stem + '</div>';
+  const inp = document.createElement("input");
+  inp.className = "fillinput"; inp.type = "text";
+  inp.autocapitalize = "off"; inp.autocomplete = "off";
+  inp.setAttribute("autocorrect", "off"); inp.spellcheck = false;
+  inp.placeholder = "輸入單字…";
+  inp.value = state.fill[i] || "";
+  inp.addEventListener("input", () => {
+    state.fill[i] = inp.value; save(); paintFooter();
+  });
+  card.appendChild(inp);
+  cwrap.appendChild(card);
+});
+
+function doneCount() {
+  return state.match.filter(v => v !== null).length +
+         state.fill.filter(v => v.trim() !== "").length;
+}
+const submitBtn = document.getElementById("submitBtn");
+const progress = document.getElementById("progress");
+function paintFooter() {
+  const n = doneCount();
+  progress.textContent = (state.name ? state.name + "｜" : "先填名字｜") +
+                         "已答 " + n + " / " + TOTAL;
+  submitBtn.disabled = !(state.name && n === TOTAL);
+}
+
+submitBtn.onclick = () => {
+  const wrongA = [], wrongB = [];
+  REVIEW.words.forEach((w, i) => { if (state.match[i] !== w.ans) wrongA.push(i); });
+  REVIEW.cloze.forEach((c, i) => {
+    const v = state.fill[i].trim().toLowerCase();
+    if (!c.accept.includes(v)) wrongB.push(i);
+  });
+  const wrongTotal = wrongA.length + wrongB.length;
+  document.getElementById("scoreNum").textContent = TOTAL - wrongTotal;
+  document.getElementById("scoreOf").textContent = " / " + TOTAL;
+  document.getElementById("verdict").textContent =
+    wrongTotal === 0 ? "全對！Test 1 的單字全部站穩了。" :
+    "下面 " + wrongTotal + " 個地方再看一眼，就完整了。";
+
+  const wl = document.getElementById("wrongList");
+  wl.innerHTML = "";
+  if (wrongTotal === 0) {
+    wl.innerHTML = '<div class="rightnote">' + TOTAL + ' / ' + TOTAL +
+                   ' — 把結果傳給老師吧！</div>';
+  }
+  wrongA.forEach(i => {
+    const w = REVIEW.words[i];
+    const picked = state.match[i];
+    const card = document.createElement("div");
+    card.className = "q wrongcard";
+    card.innerHTML = '<div class="qno">配對 第 ' + (i + 1) + ' 題</div>' +
+      '<div class="fix"><span class="word">' + w.word + '</span>' +
+      '<span class="zh">正確：' + LETTERS[w.ans] + '. ' + REVIEW.meanings[w.ans] + '</span>' +
+      '<span class="picked">你選了 ' +
+      (picked === null ? "—" : LETTERS[picked] + '. ' + REVIEW.meanings[picked]) +
+      '</span></div>';
+    wl.appendChild(card);
+  });
+  wrongB.forEach(i => {
+    const c = REVIEW.cloze[i];
+    const card = document.createElement("div");
+    card.className = "q wrongcard";
+    card.innerHTML = '<div class="qno">填空 第 ' + (i + 1) + ' 題</div>' +
+      '<div class="stem">' + c.stem.replace("______",
+        '<b><u>' + c.show + '</u></b>') + '</div>' +
+      '<div class="fix"><span class="picked">你寫了「' +
+      (state.fill[i].trim() || "—") + '」</span></div>';
+    wl.appendChild(card);
+  });
+
+  const partA = wrongA.length === 0 ? "" :
+    "配對錯: " + wrongA.map(i => REVIEW.words[i].word).join(", ");
+  const partB = wrongB.length === 0 ? "" :
+    "填空錯: " + wrongB.map(i => (i + 1) + " " + REVIEW.cloze[i].show).join(", ");
+  const tail = (partA || partB) ? [partA, partB].filter(Boolean).join("｜") : "錯: 無";
+  const line = REVIEW.id + "｜" + state.name + "｜" + (TOTAL - wrongTotal) + "/" + TOTAL +
+               "｜" + tail;
+  document.getElementById("resultLine").textContent = line;
+
+  document.getElementById("quizView").classList.add("hidden");
+  document.getElementById("footer").classList.add("hidden");
+  document.getElementById("resultView").classList.remove("hidden");
+  window.scrollTo({top: 0});
+};
+
+document.getElementById("copyBtn").onclick = async () => {
+  const text = document.getElementById("resultLine").textContent;
+  let ok = false;
+  try { await navigator.clipboard.writeText(text); ok = true; } catch (e) {
+    const ta = document.createElement("textarea");
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try { ok = document.execCommand("copy"); } catch (e2) {}
+    ta.remove();
+  }
+  const toast = document.getElementById("toast");
+  toast.textContent = ok ? "已複製，貼到 LINE 給老師吧" : "複製失敗 — 長按上面那行手動複製";
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 2600);
+};
+
+document.getElementById("retakeBtn").onclick = () => {
+  state.match = Array(nA).fill(null);
+  state.fill = Array(nB).fill("");
+  save();
+  location.reload();
+};
+
+paintFooter();
+</script>
